@@ -1,0 +1,961 @@
+plugins:
+  - rubocop-rails
+  - rubocop-rspec
+  - rubocop-capybara
+  - rubocop-factory_bot
+  - rubocop-rspec_rails
+
+AllCops:
+  Exclude:
+    - '**/tmp/**/*'
+    - '**/vendor/**/*'
+    - '**/*.html.slim'
+    - '.git/**/*'
+    - 'bin/**/*'
+    - 'coverage/**/*'
+    - 'db/**/*'
+    - 'log/**/*'
+    - 'public/**/*'
+    - 'spec/fixtures/**/*'
+    <% `git status --ignored --porcelain`.lines.grep(/^!! /).each do |path| %>
+    <% clean_path = path.strip.sub(/^!! /, '') %>
+    - '<%= clean_path %>'
+    - '<%= "#{clean_path}/**/*" %>'
+    <% end %>
+  DisplayCopNames: true
+  DisplayStyleGuide: true
+  DisabledByDefault: true
+  SuggestExtensions: false
+
+Layout/TrailingEmptyLines:
+  Enabled: true
+
+Rails:
+  Enabled: false
+
+Capybara:
+  Enabled: false
+
+FactoryBot:
+  Enabled: false
+
+RSpecRails:
+  Enabled: false
+
+Rails/UnknownEnv:
+  Enabled: true
+  Environments:
+    - development
+    - test
+    - production
+    - staging
+
+Rails/ActionFilter:
+  Enabled: true
+
+Rails/ActionOrder:
+  Enabled: true
+
+Rails/ActiveRecordAliases:
+  Enabled: true
+
+Rails/ActiveRecordCallbacksOrder:
+  Enabled: true
+
+Rails/ActiveSupportAliases:
+  Enabled: true
+
+Rails/AddColumnIndex:
+  Enabled: true
+
+Rails/AfterCommitOverride:
+  Enabled: true
+
+Rails/ApplicationController:
+  Enabled: false
+
+Rails/ApplicationJob:
+  Enabled: false
+
+Rails/ApplicationMailer:
+  Enabled: false
+
+Rails/ApplicationRecord:
+  Enabled: true
+
+Rails/ArelStar:
+  Enabled: true
+
+Rails/AttributeDefaultBlockValue:
+  Enabled: true
+
+Rails/BelongsTo:
+  Enabled: true
+
+# Solrb gem has a lot of `empty?` defined methods
+Rails/Blank:
+  Enabled: true
+  NilOrEmpty: false
+
+Rails/CompactBlank:
+  Enabled: true
+
+Rails/ContentTag:
+  Enabled: true
+
+Rails/Delegate:
+  Enabled: true
+
+Rails/DelegateAllowBlank:
+  Enabled: true
+
+Rails/DeprecatedActiveModelErrorsMethods:
+  Enabled: true
+
+Rails/DuplicateAssociation:
+  Enabled: true
+
+Rails/DuplicateScope:
+  Enabled: true
+
+# we have a lot of custom methods, but this rule can be configured in the future
+Rails/DynamicFindBy:
+  Enabled: false
+
+Rails/EagerEvaluationLogMessage:
+  Enabled: true
+
+Rails/EnumHash:
+  Enabled: true
+
+Rails/EnumUniqueness:
+  Enabled: true
+
+Rails/EnvironmentComparison:
+  Enabled: true
+
+Rails/Exit:
+  Enabled: true
+
+Rails/ExpandedDateRange:
+  Enabled: true
+
+Rails/FindBy:
+  Enabled: true
+
+Rails/FindById:
+  Enabled: true
+
+Rails/HttpPositionalArguments:
+  Enabled: true
+
+Rails/HttpStatus:
+  Enabled: true
+
+Rails/IgnoredColumnsAssignment:
+  Enabled: true
+
+Rails/IgnoredSkipActionFilterOption:
+  Enabled: true
+
+Rails/LinkToBlank:
+  Enabled: false
+
+Rails/MailerName:
+  Enabled: true
+
+Rails/MigrationClassName:
+  Enabled: true
+
+# Seems `pick` works incorrectly with `count`:
+# rows.pluck(Arel.sql("count(distinct machinio_advertising_sales_opportunities.*)")).first
+# => 147
+# rows.pick(Arel.sql("count(distinct machinio_advertising_sales_opportunities.*)"))
+# => 1
+Rails/Pick:
+  Enabled: false
+
+Rails/PluckInWhere:
+  Enabled: true
+  EnforcedStyle: aggressive
+
+Rails/PluralizationGrammar:
+  Enabled: true
+
+Rails/Presence:
+  Enabled: true
+
+# Solrb gem has a lot of `empty?` defined methods
+Rails/Present:
+  Enabled: true
+  NotNilAndNotEmpty: false
+
+Rails/RakeEnvironment:
+  Enabled: false
+
+Rails/ReadWriteAttribute:
+  Enabled: true
+
+Rails/RedundantAllowNil:
+  Enabled: true
+
+Rails/RedundantForeignKey:
+  Enabled: true
+
+Rails/RedundantPresenceValidationOnBelongsTo:
+  Enabled: false
+
+Rails/RedundantReceiverInWithOptions:
+  Enabled: true
+
+Rails/ReflectionClassName:
+  Enabled: false
+
+Rails/RelativeDateConstant:
+  Enabled: true
+
+Rails/RenderInline:
+  Enabled: false
+
+Rails/RenderPlainText:
+  Enabled: true
+
+Rails/RequestReferer:
+  Enabled: true
+
+Style/PercentLiteralDelimiters:
+  PreferredDelimiters:
+    default: ()
+    '%w': ()
+    '%W': ()
+    '%i': ()
+    '%I': ()
+
+Layout/CommentIndentation:
+  Enabled: true
+
+Layout/BeginEndAlignment:
+  Enabled: true
+
+Layout/DefEndAlignment:
+  Enabled: true
+
+Layout/EndAlignment:
+  Enabled: true
+
+Layout/EmptyLineAfterMagicComment:
+  Enabled: true
+
+Layout/EmptyLineBetweenDefs:
+  Enabled: true
+
+Layout/EmptyLinesAroundAccessModifier:
+  Enabled: true
+
+Layout/EmptyLinesAroundAttributeAccessor:
+  Enabled: true
+
+Layout/EmptyLinesAroundBeginBody:
+  Enabled: true
+
+Layout/EmptyLinesAroundBlockBody:
+  Enabled: true
+
+Layout/EndOfLine:
+  Enabled: true
+
+Layout/AccessModifierIndentation:
+  Enabled: true
+
+Layout/BlockEndNewline:
+  Enabled: true
+
+Layout/EmptyComment:
+  Enabled: true
+
+Layout/EmptyLineAfterGuardClause:
+  Enabled: true
+
+Layout/EmptyLines:
+  Enabled: true
+
+Layout/EmptyLinesAroundClassBody:
+  Enabled: true
+
+Layout/EmptyLinesAroundModuleBody:
+  Enabled: true
+
+Layout/EmptyLinesAroundExceptionHandlingKeywords:
+  Enabled: true
+
+Layout/EmptyLinesAroundMethodBody:
+  Enabled: true
+
+Layout/HeredocIndentation:
+  Enabled: true
+
+Layout/IndentationConsistency:
+  Enabled: true
+
+Layout/IndentationStyle:
+  Enabled: true
+
+Layout/IndentationWidth:
+  Enabled: true
+
+Layout/InitialIndentation:
+  Enabled: true
+
+Layout/LeadingCommentSpace:
+  Enabled: true
+
+Layout/LeadingEmptyLines:
+  Enabled: true
+
+Style/Attr:
+  Enabled: true
+
+Style/BarePercentLiterals:
+  Enabled: true
+
+Style/BeginBlock:
+  Enabled: true
+
+Style/BisectedAttrAccessor:
+  Enabled: true
+
+Style/BlockComments:
+  Enabled: true
+
+Style/BlockDelimiters:
+  Enabled: true
+
+Style/ClassCheck:
+  Enabled: true
+
+Style/ClassMethods:
+  Enabled: true
+
+Style/CollectionMethods:
+  Enabled: true
+
+Style/ColonMethodCall:
+  Enabled: true
+
+Style/ColonMethodDefinition:
+  Enabled: true
+
+Style/CommentAnnotation:
+  Enabled: true
+
+Style/DefWithParentheses:
+  Enabled: true
+
+Style/Dir:
+  Enabled: true
+
+Style/DisableCopsWithinSourceCodeDirective:
+  Enabled: true
+  AllowedCops:
+    - Rails/LinkToBlank
+
+Style/DoubleCopDisableDirective:
+  Enabled: true
+
+Style/EachForSimpleLoop:
+  Enabled: true
+
+Style/EachWithObject:
+  Enabled: true
+
+Style/EmptyBlockParameter:
+  Enabled: true
+
+Style/EmptyElse:
+  Enabled: true
+  EnforcedStyle: empty
+
+Style/EmptyLambdaParameter:
+  Enabled: true
+
+Style/EmptyLiteral:
+  Enabled: true
+
+Style/EmptyMethod:
+  Enabled: true
+  EnforcedStyle: expanded
+
+Style/Encoding:
+  Enabled: true
+
+Style/EndBlock:
+  Enabled: true
+
+Style/EndlessMethod:
+  Enabled: true
+
+Style/EvenOdd:
+  Enabled: true
+
+Style/For:
+  Enabled: true
+
+# too complicated to enable this one
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/IfWithSemicolon:
+  Enabled: true
+
+Style/InfiniteLoop:
+  Enabled: true
+
+Style/MinMax:
+  Enabled: true
+
+Style/MixinGrouping:
+  Enabled: true
+
+Style/MixinUsage:
+  Enabled: true
+
+Style/MultilineMemoization:
+  Enabled: true
+
+Style/MultilineTernaryOperator:
+  Enabled: true
+
+Style/MutableConstant:
+  Enabled: true
+
+Style/NegatedIf:
+  Enabled: true
+
+Style/NegatedUnless:
+  Enabled: true
+
+Style/NegatedWhile:
+  Enabled: true
+
+Style/NilComparison:
+  Enabled: true
+
+Style/NonNilCheck:
+  Enabled: true
+
+Style/Not:
+  Enabled: true
+
+Style/OneLineConditional:
+  Enabled: true
+
+Style/PercentQLiterals:
+  Enabled: true
+
+Style/PreferredHashMethods:
+  Enabled: true
+
+Style/RandomWithOffset:
+  Enabled: true
+
+# that's how we write interactors and other classes
+Style/OptionHash:
+  Enabled: false
+
+Style/Proc:
+  Enabled: true
+
+Style/RaiseArgs:
+  Enabled: true
+
+Style/RedundantAssignment:
+  Enabled: true
+
+Style/OrAssignment:
+  Enabled: true
+
+Style/RedundantBegin:
+  Enabled: false
+
+Style/RedundantException:
+  Enabled: true
+
+# this rule has weird auto correction
+Style/RedundantFreeze:
+  Enabled: false
+
+Style/RedundantInterpolation:
+  Enabled: true
+
+Style/RedundantParentheses:
+  Enabled: true
+
+Style/RedundantPercentQ:
+  Enabled: true
+
+Style/RedundantReturn:
+  Enabled: true
+
+Style/RedundantSelf:
+  Enabled: true
+
+Style/RedundantSort:
+  Enabled: true
+
+Style/RedundantSortBy:
+  Enabled: true
+
+Style/RescueModifier:
+  Enabled: true
+
+Style/RescueStandardError:
+  Enabled: true
+
+Style/ReturnNil:
+  Enabled: true
+
+Style/Sample:
+  Enabled: true
+
+Style/SelfAssignment:
+  Enabled: true
+
+Style/Semicolon:
+  Enabled: true
+
+Style/StabbyLambdaParentheses:
+  Enabled: true
+
+Style/StructInheritance:
+  Enabled: true
+
+Style/SymbolArray:
+  Enabled: true
+
+Style/TrailingBodyOnClass:
+  Enabled: true
+
+Security/JSONLoad:
+  Enabled: true
+
+Security/MarshalLoad:
+  Enabled: true
+
+Bundler/DuplicatedGem:
+  Enabled: true
+
+Bundler/InsecureProtocolSource:
+  Enabled: true
+
+Style/ArrayJoin:
+  Enabled: true
+
+# We have a lot of comments with examples with special non-ASCII chars
+Style/AsciiComments:
+  Enabled: false
+
+Style/CharacterLiteral:
+  Enabled: true
+
+Layout/SpaceInsideHashLiteralBraces:
+  Enabled: true
+
+Layout/SpaceAroundKeyword:
+  Enabled: true
+
+Layout/SpaceAfterMethodName:
+  Enabled: true
+
+Layout/SpaceAfterNot:
+  Enabled: true
+
+Layout/SpaceBeforeComma:
+  Enabled: true
+
+Layout/SpaceBeforeFirstArg:
+  Enabled: true
+
+Layout/SpaceInsideArrayLiteralBrackets:
+  Enabled: true
+
+Layout/SpaceInsideBlockBraces:
+  Enabled: true
+
+Layout/TrailingWhitespace:
+  Enabled: true
+
+Layout/SpaceInsideParens:
+  Enabled: true
+
+Layout/SpaceInsideRangeLiteral:
+  Enabled: true
+
+Layout/SpaceInsideReferenceBrackets:
+  Enabled: true
+
+Layout/SpaceInsideStringInterpolation:
+  Enabled: true
+
+Layout/SpaceInsidePercentLiteralDelimiters:
+  Enabled: true
+
+Layout/SpaceInsideArrayPercentLiteral:
+  Enabled: true
+
+Layout/SpaceInLambdaLiteral:
+  Enabled: true
+
+Layout/SpaceBeforeSemicolon:
+  Enabled: true
+
+Layout/ParameterAlignment:
+  Enabled: true
+
+Layout/MultilineOperationIndentation:
+  Enabled: true
+
+Layout/MultilineMethodDefinitionBraceLayout:
+  Enabled: true
+
+Layout/MultilineMethodCallIndentation:
+  Enabled: true
+
+Bundler/GemFilename:
+  Enabled: true
+
+Gemspec/DeprecatedAttributeAssignment:
+  Enabled: true
+
+Gemspec/DuplicatedAssignment:
+  Enabled: true
+
+Gemspec/OrderedDependencies:
+  Enabled: true
+
+Layout/ArgumentAlignment:
+  Enabled: true
+
+Layout/ArrayAlignment:
+  Enabled: true
+
+Layout/AssignmentIndentation:
+  Enabled: true
+
+Layout/ConditionPosition:
+  Enabled: true
+
+Layout/ClosingParenthesisIndentation:
+  Enabled: true
+
+Layout/DotPosition:
+  Enabled: true
+
+Layout/ElseAlignment:
+  Enabled: true
+
+Layout/EmptyLineAfterMultilineCondition:
+  Enabled: true
+
+Layout/ExtraSpacing:
+  Enabled: true
+
+# A lot of momoize methods create warnings
+# Relative issue: https://github.com/rubocop/rubocop/issues/9591
+Layout/FirstArgumentIndentation:
+  Enabled: false
+
+Layout/FirstArrayElementIndentation:
+  Enabled: true
+
+Layout/FirstArrayElementLineBreak:
+  Enabled: true
+
+Layout/FirstHashElementIndentation:
+  Enabled: true
+
+Layout/FirstHashElementLineBreak:
+  Enabled: true
+
+Layout/HashAlignment:
+  Enabled: true
+
+Layout/BlockAlignment:
+  Enabled: true
+
+Layout/FirstParameterIndentation:
+  Enabled: true
+
+Layout/MultilineArrayLineBreaks:
+  Enabled: true
+
+Layout/MultilineBlockLayout:
+  Enabled: true
+
+Layout/MultilineHashBraceLayout:
+  Enabled: true
+
+Layout/MultilineHashKeyLineBreaks:
+  Enabled: true
+
+Layout/MultilineMethodArgumentLineBreaks:
+  Enabled: true
+
+Layout/MultilineMethodParameterLineBreaks:
+  Enabled: true
+
+Layout/LineLength:
+  Enabled: true
+  Max: 250
+
+Layout/MultilineArrayBraceLayout:
+  Enabled: true
+
+Layout/MultilineAssignmentLayout:
+  Enabled: true
+
+Layout/MultilineMethodCallBraceLayout:
+  Enabled: true
+
+Migration/DepartmentName:
+  Enabled: true
+
+RSpecRails/AvoidSetupHook:
+  Enabled: true
+
+RSpecRails/HaveHttpStatus:
+  Enabled: true
+
+RSpecRails/InferredSpecType:
+  Enabled: true
+
+RSpecRails/MinitestAssertions:
+  Enabled: true
+
+RSpecRails/NegationBeValid:
+  Enabled: true
+
+RSpecRails/TravelAround:
+  Enabled: true
+
+RSpec/ClassCheck:
+  Enabled: true
+
+RSpec/ContainExactly:
+  Enabled: true
+
+RSpec/ContextMethod:
+  Enabled: true
+
+RSpec/DescribeMethod:
+  Enabled: true
+
+RSpec/DescribeSymbol:
+  Enabled: true
+
+RSpec/DescribedClassModuleWrapping:
+  Enabled: true
+
+RSpec/DuplicatedMetadata:
+  Enabled: true
+
+RSpec/EmptyExampleGroup:
+  Enabled: true
+
+RSpec/EmptyHook:
+  Enabled: true
+
+RSpec/EmptyLineAfterExample:
+  Enabled: true
+
+RSpec/EmptyLineAfterExampleGroup:
+  Enabled: true
+
+RSpec/EmptyLineAfterFinalLet:
+  Enabled: true
+
+RSpec/EmptyLineAfterHook:
+  Enabled: true
+
+RSpec/EmptyLineAfterSubject:
+  Enabled: true
+
+RSpec/ExcessiveDocstringSpacing:
+  Enabled: true
+
+RSpec/Focus:
+  Enabled: true
+
+RSpec/IdenticalEqualityAssertion:
+  Enabled: true
+
+RSpec/ImplicitExpect:
+  Enabled: true
+
+RSpec/InstanceSpy:
+  Enabled: true
+
+# some specs use instance variables in classes, but rubocop wrongly detects them as issues
+RSpec/InstanceVariable:
+  Enabled: false
+
+RSpec/ItBehavesLike:
+  Enabled: true
+
+RSpec/IteratedExpectation:
+  Enabled: true
+
+RSpec/LeadingSubject:
+  Enabled: true
+
+RSpec/LeakyConstantDeclaration:
+  Enabled: false
+
+Naming/ClassAndModuleCamelCase:
+  Enabled: true
+
+Naming/BlockForwarding:
+  Enabled: true
+  EnforcedStyle: explicit
+
+Naming/BlockParameterName:
+  Enabled: true
+
+Naming/ConstantName:
+  Enabled: true
+
+Naming/FileName:
+  Enabled: true
+
+Naming/HeredocDelimiterCase:
+  Enabled: true
+
+Naming/HeredocDelimiterNaming:
+  Enabled: true
+
+Naming/MethodName:
+  Enabled: true
+
+# This conflicts with all `load_*` methods in controllers
+Naming/MemoizedInstanceVariableName:
+  Enabled: false
+
+# A lot of issues that can't be fixed automatically
+Naming/MethodParameterName:
+  Enabled: false
+
+# A lot of issues that can't be fixed automatically
+Naming/PredicateName:
+  Enabled: false
+
+Naming/RescuedExceptionsVariableName:
+  Enabled: true
+
+Naming/VariableName:
+  Enabled: true
+
+# A lot of issues that can't be fixed automatically
+Naming/VariableNumber:
+  Enabled: false
+
+Style/AccessModifierDeclarations:
+  Enabled: true
+
+Style/AccessorGrouping:
+  Enabled: true
+
+Style/Alias:
+  Enabled: true
+
+Style/AndOr:
+  Enabled: true
+
+Style/ArgumentsForwarding:
+  Enabled: true
+
+Style/ArrayCoercion:
+  Enabled: true
+
+Style/ArrayIntersect:
+  Enabled: true
+
+FactoryBot/AssociationStyle: # new in 2.23
+  Enabled: true
+
+FactoryBot/ConsistentParenthesesStyle: # new in 2.14
+  Enabled: true
+
+FactoryBot/ExcessiveCreateList: # new in 2.25
+  Enabled: true
+  MaxAmount: 150 # some specs have a lot of factories
+
+FactoryBot/FactoryAssociationWithStrategy: # new in 2.23
+  Enabled: true
+
+FactoryBot/FactoryNameStyle: # new in 2.16
+  Enabled: true
+
+FactoryBot/IdSequence: # new in 2.24
+  Enabled: false # one factory use ID sequence
+
+FactoryBot/RedundantFactoryOption: # new in 2.23
+  Enabled: true
+
+FactoryBot/SyntaxMethods: # new in 2.7
+  Enabled: true
+
+Capybara/ClickLinkOrButtonStyle: # new in 2.19
+  Enabled: true
+
+Capybara/MatchStyle: # new in 2.17
+  Enabled: true
+
+Capybara/NegationMatcher: # new in 2.14
+  Enabled: true
+
+Capybara/RedundantWithinFind: # new in 2.20
+  Enabled: true
+
+Capybara/SpecificActions: # new in 2.14
+  Enabled: true
+
+Capybara/SpecificFinders: # new in 2.13
+  Enabled: true
+
+Capybara/SpecificMatcher: # new in 2.12
+  Enabled: true
+
+Capybara/RSpec/HaveSelector: # new in 2.19
+  Enabled: true
+
+Capybara/CurrentPathExpectation:
+  Enabled: true
+
+Capybara/FindAllFirst:
+  Enabled: true
+
+Capybara/NegationMatcherAfterVisit:
+  Enabled: true
+
+Rails/TimeZone:
+  Enabled: true
+  EnforcedStyle: strict
+  Exclude:
+    - gems/**/*
+
+Rails/TimeZoneAssignment:
+  Enabled: true
+
+Rails/ToFormattedS:
+  Enabled: true
+
+Rails/ToSWithArgument:
+  Enabled: true
+
+Rails/WhereRange:
+  Enabled: true
+
+Rails/Date:
+  Enabled: true
+  EnforcedStyle: strict
+  Exclude:
+    - lib/tasks/healthchecker.rake
