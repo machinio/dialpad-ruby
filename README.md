@@ -1,3 +1,5 @@
+# 🚧 Currently under construction 🚧
+
 # Dialpad Ruby Gem
 
 A Ruby client for the Dialpad API that provides easy access to webhooks, subscriptions, contacts, and calls with full CRUD operations and comprehensive validation.
