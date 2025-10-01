@@ -1,6 +1,6 @@
 module Dialpad
   class Contact < DialpadObject
-    class RequiredAttributeError < StandardError; end
+    class RequiredAttributeError < Dialpad::DialpadObject::RequiredAttributeError; end
 
     ATTRIBUTES = %i(
       company_name

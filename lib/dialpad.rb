@@ -1,4 +1,11 @@
 require 'dialpad/version'
+
+module Dialpad
+  class Error < StandardError; end
+  class ConfigurationError < Error; end
+  class APIError < Error; end
+end
+
 require 'dialpad/client'
 require 'dialpad/validations'
 require 'dialpad/dialpad_object'
@@ -9,10 +16,6 @@ require 'dialpad/contact'
 require 'dialpad/call'
 
 module Dialpad
-  class Error < StandardError; end
-  class ConfigurationError < Error; end
-  class APIError < Error; end
-
   class << self
     attr_writer :base_url, :token
 

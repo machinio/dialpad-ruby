@@ -1,5 +1,7 @@
 module Dialpad
   class DialpadObject
+    class RequiredAttributeError < Dialpad::APIError; end
+
     attr_reader :attributes
 
     def initialize(attributes = {})

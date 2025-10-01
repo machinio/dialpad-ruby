@@ -1,7 +1,7 @@
 module Dialpad
   module Subscriptions
     class CallEvent < DialpadObject
-      class RequiredAttributeError < StandardError; end
+      class RequiredAttributeError < Dialpad::DialpadObject::RequiredAttributeError; end
 
       ATTRIBUTES = %i(
         call_states

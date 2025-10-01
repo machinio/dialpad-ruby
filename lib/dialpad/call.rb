@@ -3,46 +3,41 @@ module Dialpad
     class RequiredAttributeError < StandardError; end
 
     ATTRIBUTES = %i(
-      date_started
+      admin_call_recording_share_links
       call_id
-      state
-      direction
-      external_number
-      internal_number
-      date_rang
-      date_first_rang
-      date_queued
-      target_availability_status
-      callback_requested
+      call_recording_share_links
+      contact
+      csat_recording_urls
+      csat_score
+      csat_transcriptions
+      custom_data
       date_connected
       date_ended
-      talk_time
-      hold_time
+      date_rang
+      date_started
+      direction
       duration
-      total_duration
-      contact
-      target
       entry_point_call_id
       entry_point_target
+      event_timestamp
+      external_number
+      group_id
+      internal_number
+      is_transferred
+      labels
+      master_call_id
+      mos_score
       operator_call_id
       proxy_target
-      group_id
-      master_call_id
-      is_transferred
-      csat_score
-      routing_breadcrumbs
-      event_timestamp
-      mos_score
-      labels
-      was_recorded
-      voicemail_link
-      voicemail_recording_id
-      call_recording_ids
-      transcription_text
       recording_details
-      integrations
-      controller
-      action
+      routing_breadcrumbs
+      screen_recording_urls
+      state
+      target
+      total_duration
+      transcription_text
+      voicemail_share_link
+      was_recorded
     ).freeze
 
     class << self

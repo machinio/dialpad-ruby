@@ -1,7 +1,7 @@
 module Dialpad
   module Subscriptions
     class ContactEvent < DialpadObject
-      class RequiredAttributeError < StandardError; end
+      class RequiredAttributeError < Dialpad::DialpadObject::RequiredAttributeError; end
 
       ATTRIBUTES = %i(
         contact_type
