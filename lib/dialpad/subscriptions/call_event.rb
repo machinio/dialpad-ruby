@@ -25,6 +25,8 @@ module Dialpad
         # https://developers.dialpad.com/reference/webhook_call_event_subscriptionlist
         def list(params = {})
           data = Dialpad.client.get('subscriptions/call', params)
+          return [] if data['items'].blank?
+
           data['items'].map { |item| new(item) }
         end
 

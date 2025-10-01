@@ -59,16 +59,9 @@ module Dialpad
       # https://developers.dialpad.com/reference/calllist
       def list(params = {})
         data = Dialpad.client.get('call', params)
+        return [] if data['items'].blank?
 
         data['items'].map { |item| new(item) }
-      end
-
-      private
-
-      def from_hash(hash)
-        symbolized = hash.respond_to?(:to_h) ? hash.to_h.transform_keys(&:to_sym) : hash
-        attrs = ATTRIBUTES.filter_map { |key| [key, symbolized[key]] if symbolized.key?(key) }.to_h
-        new(attrs)
       end
     end
   end

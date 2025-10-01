@@ -22,6 +22,8 @@ module Dialpad
       # https://developers.dialpad.com/reference/webhookslist
       def list(params = {})
         data = Dialpad.client.get('webhooks', params)
+        return [] if data['items'].blank?
+
         data['items'].map { |item| new(item) }
       end
 

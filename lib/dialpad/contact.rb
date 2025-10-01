@@ -1,5 +1,5 @@
 module Dialpad
-  class Contact
+  class Contact < DialpadObject
     class RequiredAttributeError < StandardError; end
 
     ATTRIBUTES = %i(
@@ -20,6 +20,10 @@ module Dialpad
       urls
     ).freeze
 
+    def persisted?
+      attributes[:id].present?
+    end
+
     class << self
       include Validations
 
@@ -27,40 +31,48 @@ module Dialpad
       def retrieve(id = nil)
         validate_required_attribute(id, "ID")
 
-        Dialpad.client.get("contacts/#{id}")
+        data = Dialpad.client.get("contacts/#{id}")
+        new(data)
       end
 
       # https://developers.dialpad.com/reference/contactslist
       def list(params = {})
-        Dialpad.client.get('contacts', params)
+        data = Dialpad.client.get('contacts', params)
+        return [] if data['items'].blank?
+
+        data['items'].map { |item| new(item) }
       end
 
       # https://developers.dialpad.com/reference/contactscreate
       def create(attributes = {})
         validate_required_attributes(attributes, %i(first_name last_name))
 
-        Dialpad.client.post('contacts', attributes)
+        data = Dialpad.client.post('contacts', attributes)
+        new(data)
       end
 
       # https://developers.dialpad.com/reference/contactscreate_with_uid
       def create_or_update(attributes = {})
         validate_required_attributes(attributes, %i(first_name last_name uid))
 
-        Dialpad.client.put('contacts', attributes)
+        data = Dialpad.client.put('contacts', attributes)
+        new(data)
       end
 
       # https://developers.dialpad.com/reference/contactsupdate
       def update(id = nil, attributes = {})
         validate_required_attribute(id, "ID")
 
-        Dialpad.client.patch("contacts/#{id}", attributes)
+        data = Dialpad.client.patch("contacts/#{id}", attributes)
+        new(data)
       end
 
       # https://developers.dialpad.com/reference/contactsdelete
       def destroy(id = nil)
         validate_required_attribute(id, "ID")
 
-        Dialpad.client.delete("contacts/#{id}")
+        data = Dialpad.client.delete("contacts/#{id}")
+        new(data)
       end
     end
   end
