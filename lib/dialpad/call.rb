@@ -57,7 +57,7 @@ module Dialpad
       # https://developers.dialpad.com/reference/calllist
       def list(params = {})
         data = Dialpad.client.get('call', params)
-        return [] if data['items'].nil? || data['items'].empty?
+        return [] if data['items'].nil?
 
         data['items'].map { |item| new(item) }
       end
