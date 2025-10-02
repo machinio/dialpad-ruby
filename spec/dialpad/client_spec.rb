@@ -27,11 +27,11 @@ RSpec.describe Dialpad::Client do
     it 'makes a GET request' do
       stub_request(:get, "#{base_url}/test")
         .with(headers: { 'Authorization' => "Bearer #{token}" })
-        .to_return(status: 200, body: { 'id' => 1, 'name' => 'test' }.to_json)
+        .to_return(status: 200, body: { 'id' => 1, 'name' => 'test' }.to_json, headers: { 'Content-Type' => 'application/json' })
 
       response = client.get('/test')
-      expect(response.id).to eq(1)
-      expect(response.name).to eq('test')
+      expect(response['id']).to eq(1)
+      expect(response['name']).to eq('test')
     end
   end
 
@@ -42,11 +42,11 @@ RSpec.describe Dialpad::Client do
           headers: { 'Authorization' => "Bearer #{token}" },
           body: { 'name' => 'test' }.to_json
         )
-        .to_return(status: 201, body: { 'id' => 1, 'name' => 'test' }.to_json)
+        .to_return(status: 201, body: { 'id' => 1, 'name' => 'test' }.to_json, headers: { 'Content-Type' => 'application/json' })
 
       response = client.post('/test', { 'name' => 'test' })
-      expect(response.id).to eq(1)
-      expect(response.name).to eq('test')
+      expect(response['id']).to eq(1)
+      expect(response['name']).to eq('test')
     end
   end
 
@@ -57,11 +57,11 @@ RSpec.describe Dialpad::Client do
           headers: { 'Authorization' => "Bearer #{token}" },
           body: { 'name' => 'updated' }.to_json
         )
-        .to_return(status: 200, body: { 'id' => 1, 'name' => 'updated' }.to_json)
+        .to_return(status: 200, body: { 'id' => 1, 'name' => 'updated' }.to_json, headers: { 'Content-Type' => 'application/json' })
 
       response = client.put('/test/1', { 'name' => 'updated' })
-      expect(response.id).to eq(1)
-      expect(response.name).to eq('updated')
+      expect(response['id']).to eq(1)
+      expect(response['name']).to eq('updated')
     end
   end
 
@@ -72,7 +72,7 @@ RSpec.describe Dialpad::Client do
         .to_return(status: 204, body: '')
 
       response = client.delete('/test/1')
-      expect(response).to be_nil
+      expect(response).to eq('')
     end
   end
 

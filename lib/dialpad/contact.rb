@@ -20,10 +20,6 @@ module Dialpad
       urls
     ).freeze
 
-    def persisted?
-      attributes[:id].present?
-    end
-
     class << self
       include Validations
 
@@ -38,7 +34,7 @@ module Dialpad
       # https://developers.dialpad.com/reference/contactslist
       def list(params = {})
         data = Dialpad.client.get('contacts', params)
-        return [] if data['items'].blank?
+        return [] if data['items'].nil? || data['items'].empty?
 
         data['items'].map { |item| new(item) }
       end

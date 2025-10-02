@@ -1,18 +1,17 @@
 module Dialpad
   class Call < DialpadObject
-    class RequiredAttributeError < StandardError; end
+    class RequiredAttributeError < Dialpad::DialpadObject::RequiredAttributeError; end
 
     ATTRIBUTES = %i(
-      admin_call_recording_share_links
       call_id
-      call_recording_share_links
+      call_recording_ids
+      callback_requested
       contact
-      csat_recording_urls
       csat_score
-      csat_transcriptions
-      custom_data
       date_connected
       date_ended
+      date_first_rang
+      date_queued
       date_rang
       date_started
       direction
@@ -22,7 +21,9 @@ module Dialpad
       event_timestamp
       external_number
       group_id
+      hold_time
       internal_number
+      integrations
       is_transferred
       labels
       master_call_id
@@ -31,12 +32,14 @@ module Dialpad
       proxy_target
       recording_details
       routing_breadcrumbs
-      screen_recording_urls
       state
+      talk_time
       target
+      target_availability_status
       total_duration
       transcription_text
-      voicemail_share_link
+      voicemail_link
+      voicemail_recording_id
       was_recorded
     ).freeze
 
@@ -54,7 +57,7 @@ module Dialpad
       # https://developers.dialpad.com/reference/calllist
       def list(params = {})
         data = Dialpad.client.get('call', params)
-        return [] if data['items'].blank?
+        return [] if data['items'].nil? || data['items'].empty?
 
         data['items'].map { |item| new(item) }
       end
