@@ -1,7 +1,7 @@
 module Dialpad
   module Subscriptions
     class CallEvent < DialpadObject
-      class RequiredAttributeError < StandardError; end
+      class RequiredAttributeError < Dialpad::DialpadObject::RequiredAttributeError; end
 
       ATTRIBUTES = %i(
         call_states
@@ -25,6 +25,8 @@ module Dialpad
         # https://developers.dialpad.com/reference/webhook_call_event_subscriptionlist
         def list(params = {})
           data = Dialpad.client.get('subscriptions/call', params)
+          return [] if data['items'].nil? || data['items'].empty?
+
           data['items'].map { |item| new(item) }
         end
 

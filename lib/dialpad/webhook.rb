@@ -1,6 +1,6 @@
 module Dialpad
   class Webhook < DialpadObject
-    class RequiredAttributeError < StandardError; end
+    class RequiredAttributeError < Dialpad::DialpadObject::RequiredAttributeError; end
 
     ATTRIBUTES = %i(
       hook_url
@@ -22,6 +22,8 @@ module Dialpad
       # https://developers.dialpad.com/reference/webhookslist
       def list(params = {})
         data = Dialpad.client.get('webhooks', params)
+        return [] if data['items'].nil? || data['items'].empty?
+
         data['items'].map { |item| new(item) }
       end
 

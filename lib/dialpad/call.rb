@@ -1,48 +1,46 @@
 module Dialpad
   class Call < DialpadObject
-    class RequiredAttributeError < StandardError; end
+    class RequiredAttributeError < Dialpad::DialpadObject::RequiredAttributeError; end
 
     ATTRIBUTES = %i(
-      date_started
       call_id
-      state
-      direction
-      external_number
-      internal_number
-      date_rang
-      date_first_rang
-      date_queued
-      target_availability_status
+      call_recording_ids
       callback_requested
+      contact
+      csat_score
       date_connected
       date_ended
-      talk_time
-      hold_time
+      date_first_rang
+      date_queued
+      date_rang
+      date_started
+      direction
       duration
-      total_duration
-      contact
-      target
       entry_point_call_id
       entry_point_target
+      event_timestamp
+      external_number
+      group_id
+      hold_time
+      internal_number
+      integrations
+      is_transferred
+      labels
+      master_call_id
+      mos_score
       operator_call_id
       proxy_target
-      group_id
-      master_call_id
-      is_transferred
-      csat_score
+      recording_details
       routing_breadcrumbs
-      event_timestamp
-      mos_score
-      labels
-      was_recorded
+      state
+      talk_time
+      target
+      target_availability_status
+      total_duration
+      transcription_text
       voicemail_link
       voicemail_recording_id
-      call_recording_ids
-      transcription_text
-      recording_details
-      integrations
-      controller
-      action
+      was_recorded
     ).freeze
 
     class << self
@@ -59,16 +57,9 @@ module Dialpad
       # https://developers.dialpad.com/reference/calllist
       def list(params = {})
         data = Dialpad.client.get('call', params)
+        return [] if data['items'].nil? || data['items'].empty?
 
         data['items'].map { |item| new(item) }
-      end
-
-      private
-
-      def from_hash(hash)
-        symbolized = hash.respond_to?(:to_h) ? hash.to_h.transform_keys(&:to_sym) : hash
-        attrs = ATTRIBUTES.filter_map { |key| [key, symbolized[key]] if symbolized.key?(key) }.to_h
-        new(attrs)
       end
     end
   end
