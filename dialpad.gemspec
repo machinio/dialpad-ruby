@@ -17,7 +17,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'faraday', '~> 2.0'
   spec.add_dependency 'json', '~> 2.0'
 
-  spec.required_ruby_version = '>= 3.4.2'
+  spec.required_ruby_version = '>= 3.0.0'
 
   spec.add_development_dependency 'bundler', '~> 2.0'
   spec.add_development_dependency 'rake', '~> 13.0'
