@@ -1,10 +1,10 @@
 # 🚧 Currently under construction 🚧
 
-# Dialpad Ruby Gem
-
 ![Tests](https://github.com/maddale/dialpad-ruby/workflows/Ruby/badge.svg)
 
-A Ruby client for the Dialpad API that provides easy access to webhooks, subscriptions, contacts, and calls with full CRUD operations and comprehensive validation.
+# Dialpad Ruby Gem
+
+A Ruby client for the Dialpad API that provides easy access to webhooks, subscriptions, contacts, and calls with full CRUD operations and comprehensive validation. Built with a clean object-oriented architecture using `DialpadObject` as the base class for all API resources.
 
 ## Installation
 
@@ -46,6 +46,17 @@ Dialpad.configure do |config|
 end
 ```
 
+### 3. Direct Client Initialization
+
+```ruby
+require 'dialpad'
+
+client = Dialpad::Client.new(
+  base_url: "https://dialpad.com/api/v2",
+  token: "your_api_token_here"
+)
+```
+
 ## Usage
 
 ### Webhooks
@@ -69,6 +80,11 @@ updated_webhook = Dialpad::Webhook.update(webhook_id, {
 
 # Delete a webhook
 Dialpad::Webhook.destroy(webhook_id)
+
+# Access webhook attributes
+puts webhook.id          # => 1
+puts webhook.hook_url    # => "https://example.com/webhook"
+puts webhook.signature   # => "webhook_signature"
 ```
 
 ### Event Subscriptions
@@ -97,6 +113,12 @@ updated_subscription = Dialpad::Subscriptions::CallEvent.update(subscription_id,
 
 # Delete a call event subscription
 Dialpad::Subscriptions::CallEvent.destroy(subscription_id)
+
+# Access subscription attributes
+puts subscription.id                # => 1
+puts subscription.call_states       # => ["completed", "started"]
+puts subscription.enabled           # => true
+puts subscription.group_calls_only  # => false
 ```
 
 #### Contact Event Subscriptions
@@ -111,16 +133,23 @@ subscription = Dialpad::Subscriptions::ContactEvent.retrieve(subscription_id)
 # Create a new contact event subscription (requires webhook_id)
 new_subscription = Dialpad::Subscriptions::ContactEvent.create({
   webhook_id: webhook_id,
-  contact_events: ["created", "updated"]
+  contact_type: "user"
 })
 
 # Update a contact event subscription
 updated_subscription = Dialpad::Subscriptions::ContactEvent.update(subscription_id, {
-  contact_events: ["created", "updated", "deleted"]
+  contact_type: "company"
 })
 
 # Delete a contact event subscription
 Dialpad::Subscriptions::ContactEvent.destroy(subscription_id)
+
+# Access subscription attributes
+puts subscription.id           # => 1
+puts subscription.contact_type # => "user"
+puts subscription.enabled      # => true
+puts subscription.webhook      # => webhook object
+puts subscription.websocket    # => websocket object
 ```
 
 ### Contacts
@@ -155,6 +184,23 @@ updated_contact = Dialpad::Contact.update(contact_id, {
 
 # Delete a contact
 Dialpad::Contact.destroy(contact_id)
+
+# Access contact attributes
+puts contact.id              # => 1
+puts contact.first_name      # => "John"
+puts contact.last_name       # => "Doe"
+puts contact.display_name    # => "John Doe"
+puts contact.company_name    # => "Acme Corp"
+puts contact.job_title       # => "Software Engineer"
+puts contact.emails          # => ["john.doe@example.com"]
+puts contact.phones          # => ["+1234567890"]
+puts contact.primary_email   # => "john.doe@example.com"
+puts contact.primary_phone   # => "+1234567890"
+puts contact.extension       # => "1234"
+puts contact.owner_id        # => 123
+puts contact.type            # => "user"
+puts contact.trunk_group     # => "main"
+puts contact.urls            # => ["https://example.com"]
 ```
 
 ### Calls
@@ -167,32 +213,82 @@ calls = Dialpad::Call.list
 call = Dialpad::Call.retrieve(call_id)
 
 # Access call attributes
-puts call.direction        # => "inbound"
-puts call.state           # => "completed"
-puts call.date_started    # => 1704110400
-puts call.duration        # => 120
-puts call.external_number # => "+1234567890"
+puts call.call_id                    # => "call_123"
+puts call.direction                  # => "inbound"
+puts call.state                      # => "completed"
+puts call.date_started               # => 1704110400
+puts call.date_ended                 # => 1704110520
+puts call.date_connected             # => 1704110410
+puts call.date_first_rang            # => 1704110405
+puts call.date_queued                # => 1704110400
+puts call.date_rang                  # => 1704110405
+puts call.duration                   # => 120
+puts call.total_duration             # => 120
+puts call.talk_time                  # => 100
+puts call.hold_time                  # => 20
+puts call.external_number            # => "+1234567890"
+puts call.internal_number            # => "+0987654321"
+puts call.target                     # => "target_info"
+puts call.entry_point_target         # => "entry_point"
+puts call.entry_point_call_id        # => "entry_call_123"
+puts call.operator_call_id           # => "operator_123"
+puts call.master_call_id             # => "master_123"
+puts call.proxy_target               # => "proxy_info"
+puts call.group_id                   # => 456
+puts call.is_transferred             # => false
+puts call.was_recorded               # => true
+puts call.callback_requested         # => false
+puts call.csat_score                 # => 5
+puts call.mos_score                  # => 4.2
+puts call.target_availability_status # => "available"
+puts call.transcription_text         # => "Hello, how can I help you?"
+puts call.voicemail_link             # => "https://voicemail.url"
+puts call.voicemail_recording_id     # => "vm_123"
+puts call.call_recording_ids         # => ["rec_123", "rec_456"]
+puts call.labels                     # => ["important", "follow-up"]
+puts call.integrations               # => integration objects
+puts call.recording_details          # => recording details
+puts call.routing_breadcrumbs        # => routing info
+puts call.contact                    # => contact object
+puts call.event_timestamp            # => 1704110400
 ```
 
 ## Response Format
 
-### Standard Objects
-Most API responses are returned as structured objects with dot notation access:
+### DialpadObject Base Class
+All API responses are returned as `DialpadObject` instances with dynamic attribute access:
 
 ```ruby
 webhook = Dialpad::Webhook.retrieve(1)
 puts webhook.id          # => 1
 puts webhook.hook_url    # => "https://example.com/webhook"
+puts webhook.signature   # => "webhook_signature"
+
+# All objects support method_missing for dynamic attribute access
+contact = Dialpad::Contact.retrieve(1)
+puts contact.first_name  # => "John"
+puts contact.last_name   # => "Doe"
+puts contact.emails      # => ["john@example.com"]
 ```
+
+### Object Attributes
+Each object type has predefined attributes available through the `ATTRIBUTES` constant:
+
+- **Webhook**: `id`, `hook_url`, `signature`
+- **Contact**: `id`, `first_name`, `last_name`, `display_name`, `company_name`, `job_title`, `emails`, `phones`, `primary_email`, `primary_phone`, `extension`, `owner_id`, `type`, `trunk_group`, `urls`
+- **Call**: `call_id`, `direction`, `state`, `date_started`, `date_ended`, `duration`, `external_number`, `internal_number`, and many more
+- **CallEvent Subscription**: `id`, `call_states`, `enabled`, `group_calls_only`, `webhook`
+- **ContactEvent Subscription**: `id`, `contact_type`, `enabled`, `webhook`, `websocket`
 
 ## Validation
 
-The gem includes comprehensive validation for required attributes:
+The gem includes comprehensive validation for required attributes using the `Validations` module:
 
 ### Required Attributes
 - **Webhooks**: `hook_url` for create operations
-- **Subscriptions**: `webhook_id` for create operations
-- **Contacts**: `first_name` and `last_name` for create operations
+- **Call Event Subscriptions**: `webhook_id` for create operations
+- **Contact Event Subscriptions**: `webhook_id` for create operations
+- **Contacts**: `first_name` and `last_name` for create operations, `uid` for create_or_update operations
 - **All Resources**: `id` for retrieve, update, destroy operations
 
 ### Validation Examples
@@ -206,6 +302,12 @@ Dialpad::Contact.create({ email: "test@example.com" })
 
 # This will raise Dialpad::Call::RequiredAttributeError
 Dialpad::Call.retrieve(nil)
+
+# This will raise Dialpad::Subscriptions::CallEvent::RequiredAttributeError
+Dialpad::Subscriptions::CallEvent.create({})
+
+# This will raise Dialpad::Subscriptions::ContactEvent::RequiredAttributeError
+Dialpad::Subscriptions::ContactEvent.create({})
 ```
 
 ## Error Handling
@@ -225,13 +327,54 @@ end
 ```
 
 ### Exception Types
-- `Dialpad::APIError` - HTTP/API related errors
-- `Dialpad::ConfigurationError` - Missing configuration
+- `Dialpad::Error` - Base error class
+- `Dialpad::APIError` - HTTP/API related errors (4xx, 5xx status codes)
+- `Dialpad::ConfigurationError` - Missing configuration (base_url or token)
+- `Dialpad::DialpadObject::RequiredAttributeError` - Base validation error class
 - `Dialpad::Webhook::RequiredAttributeError` - Webhook validation errors
 - `Dialpad::Subscriptions::CallEvent::RequiredAttributeError` - Call event validation errors
 - `Dialpad::Subscriptions::ContactEvent::RequiredAttributeError` - Contact event validation errors
 - `Dialpad::Contact::RequiredAttributeError` - Contact validation errors
 - `Dialpad::Call::RequiredAttributeError` - Call validation errors
+
+## HTTP Methods and Client Usage
+
+The gem uses a `Client` class that handles all HTTP communication with the Dialpad API:
+
+### Available HTTP Methods
+- `GET` - Retrieve resources (list, retrieve)
+- `POST` - Create new resources
+- `PUT` - Update resources (full update)
+- `PATCH` - Partial updates (used by Contact.update)
+- `DELETE` - Remove resources
+
+### Direct Client Usage
+
+You can also use the client directly for custom API calls:
+
+```ruby
+# Direct client usage
+client = Dialpad.client
+
+# GET request
+response = client.get('custom/endpoint', { param: 'value' })
+
+# POST request
+response = client.post('custom/endpoint', { data: 'value' })
+
+# PUT request
+response = client.put('custom/endpoint', { data: 'value' })
+
+# PATCH request
+response = client.patch('custom/endpoint', { data: 'value' })
+
+# DELETE request
+response = client.delete('custom/endpoint')
+```
+
+### Response Handling
+- **2xx responses**: Return parsed JSON as Hash objects
+- **4xx/5xx responses**: Raise `Dialpad::APIError` with status code and error message
 
 ## Development
 
