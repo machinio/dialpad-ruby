@@ -39,7 +39,7 @@ module Dialpad
       def update(id = nil, attributes = {})
         validate_required_attribute(id, "ID")
 
-        data = Dialpad.client.put("webhooks/#{id}", attributes)
+        data = Dialpad.client.patch("webhooks/#{id}", attributes)
         new(data)
       end
 

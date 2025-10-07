@@ -226,7 +226,7 @@ RSpec.describe Dialpad::Webhook do
 
       context 'with valid ID and attributes' do
         it 'updates a webhook' do
-          stub_request(:put, "#{base_url}/webhooks/5159136949157888")
+          stub_request(:patch, "#{base_url}/webhooks/5159136949157888")
             .with(
               headers: { 'Authorization' => "Bearer #{token}" },
               body: update_attributes.to_json
