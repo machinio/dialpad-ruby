@@ -13,6 +13,7 @@ require 'dialpad/webhook'
 require 'dialpad/subscriptions/call_event'
 require 'dialpad/subscriptions/contact_event'
 require 'dialpad/contact'
+require 'dialpad/user'
 require 'dialpad/call'
 
 module Dialpad
