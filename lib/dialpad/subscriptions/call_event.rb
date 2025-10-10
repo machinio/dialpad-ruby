@@ -9,7 +9,17 @@ module Dialpad
         group_calls_only
         id
         webhook
+        websocket
       ).freeze
+
+      # Response might contain webhook or websocket object
+      def webhook
+        attributes[:webhook]
+      end
+
+      def websocket
+        attributes[:websocket]
+      end
 
       class << self
         include Validations

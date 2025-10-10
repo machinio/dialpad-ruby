@@ -1,5 +1,7 @@
 module Dialpad
   class User < DialpadObject
+    class RequiredAttributeError < Dialpad::DialpadObject::RequiredAttributeError; end
+
     ATTRIBUTES = %i(
       admin_office_ids
       company_id

@@ -522,7 +522,7 @@ RSpec.describe Dialpad::User do
 
   describe 'error handling' do
     it 'defines RequiredAttributeError' do
-      expect(Dialpad::User::RequiredAttributeError).to be Dialpad::DialpadObject::RequiredAttributeError
+      expect(Dialpad::User::RequiredAttributeError).to be < Dialpad::DialpadObject::RequiredAttributeError
     end
   end
 end

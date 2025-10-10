@@ -15,6 +15,7 @@ require 'dialpad/subscriptions/contact_event'
 require 'dialpad/contact'
 require 'dialpad/user'
 require 'dialpad/call'
+require 'dialpad/websocket'
 
 module Dialpad
   class << self
