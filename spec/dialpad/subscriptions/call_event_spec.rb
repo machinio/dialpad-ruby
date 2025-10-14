@@ -456,11 +456,11 @@ RSpec.describe Dialpad::Subscriptions::CallEvent do
     it 'defines ATTRIBUTES constant' do
       expect(described_class::ATTRIBUTES).to be_an(Array)
       expect(described_class::ATTRIBUTES).to be_frozen
-      expect(described_class::ATTRIBUTES).to include(:call_states, :enabled, :group_calls_only, :id, :webhook)
+      expect(described_class::ATTRIBUTES).to include(:call_states, :enabled, :group_calls_only, :id, :webhook, :websocket)
     end
 
     it 'includes all expected call event attributes' do
-      expected_attributes = %i(call_states enabled group_calls_only id webhook)
+      expected_attributes = %i(call_states enabled group_calls_only id webhook websocket)
       expect(described_class::ATTRIBUTES).to match_array(expected_attributes)
     end
   end
