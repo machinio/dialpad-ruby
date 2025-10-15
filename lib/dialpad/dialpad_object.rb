@@ -12,7 +12,7 @@ module Dialpad
     end
 
     def method_missing(method, *args)
-      if @attributes.key?(method)
+      if self.class::ATTRIBUTES.include?(method)
         @attributes[method]
       else
         super
@@ -20,7 +20,7 @@ module Dialpad
     end
 
     def respond_to_missing?(method, include_private = false)
-      @attributes.key?(method) || super
+      self.class::ATTRIBUTES.include?(method) || super
     end
   end
 end

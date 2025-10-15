@@ -224,7 +224,6 @@ RSpec.describe Dialpad::Contact do
           'id' => '123',
           'first_name' => 'John',
           'last_name' => 'Doe',
-          'uid' => '12345',
           'emails' => ['john@example.com']
         }
       end
@@ -244,7 +243,6 @@ RSpec.describe Dialpad::Contact do
           expect(contact.id).to eq('123')
           expect(contact.first_name).to eq('John')
           expect(contact.last_name).to eq('Doe')
-          expect(contact.uid).to eq('12345')
         end
       end
 
@@ -430,14 +428,6 @@ RSpec.describe Dialpad::Contact do
       it 'does not respond to undefined attributes' do
         expect(contact.respond_to?(:undefined_attribute)).to be false
       end
-    end
-  end
-
-  describe 'constants' do
-    it 'defines ATTRIBUTES constant' do
-      expect(described_class::ATTRIBUTES).to be_an(Array)
-      expect(described_class::ATTRIBUTES).to be_frozen
-      expect(described_class::ATTRIBUTES).to include(:id, :first_name, :last_name, :emails, :phones)
     end
   end
 

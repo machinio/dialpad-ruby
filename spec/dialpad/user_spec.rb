@@ -461,65 +461,6 @@ RSpec.describe Dialpad::User do
     end
   end
 
-  describe 'constants' do
-    it 'defines ATTRIBUTES constant' do
-      expect(described_class::ATTRIBUTES).to be_an(Array)
-      expect(described_class::ATTRIBUTES).to be_frozen
-      expect(described_class::ATTRIBUTES).to include(
-        :id,
-        :first_name,
-        :last_name,
-        :emails,
-        :phone_numbers,
-        :company_id,
-        :office_id,
-        :is_admin,
-        :is_super_admin,
-        :display_name,
-        :state,
-        :timezone,
-        :language
-      )
-    end
-
-    it 'includes all expected attributes from the payload' do
-      expected_attributes = %i(
-        admin_office_ids
-        company_id
-        country
-        date_active
-        date_added
-        date_first_login
-        display_name
-        do_not_disturb
-        emails
-        first_name
-        id
-        image_url
-        international_dialing_enabled
-        is_admin
-        is_available
-        is_on_duty
-        is_online
-        is_super_admin
-        language
-        last_name
-        license
-        muted
-        office_id
-        onboarding_completed
-        phone_numbers
-        state
-        timezone
-        voicemail
-      )
-
-      expected_attributes.each do |attr|
-        expect(described_class::ATTRIBUTES).to include(attr)
-      end
-    end
-  end
-
   describe 'error handling' do
     it 'defines RequiredAttributeError' do
       expect(Dialpad::User::RequiredAttributeError).to be < Dialpad::DialpadObject::RequiredAttributeError

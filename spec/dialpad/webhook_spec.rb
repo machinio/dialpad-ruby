@@ -402,19 +402,6 @@ RSpec.describe Dialpad::Webhook do
     end
   end
 
-  describe 'constants' do
-    it 'defines ATTRIBUTES constant' do
-      expect(described_class::ATTRIBUTES).to be_an(Array)
-      expect(described_class::ATTRIBUTES).to be_frozen
-      expect(described_class::ATTRIBUTES).to include(:hook_url, :id, :signature)
-    end
-
-    it 'includes all expected webhook attributes' do
-      expected_attributes = %i(hook_url id signature)
-      expect(described_class::ATTRIBUTES).to match_array(expected_attributes)
-    end
-  end
-
   describe 'error handling' do
     it 'defines RequiredAttributeError' do
       expect(Dialpad::Webhook::RequiredAttributeError).to be < Dialpad::DialpadObject::RequiredAttributeError

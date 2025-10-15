@@ -3,11 +3,13 @@ module Dialpad
     class RequiredAttributeError < Dialpad::DialpadObject::RequiredAttributeError; end
 
     ATTRIBUTES = %i(
+      admin_recording_urls
       call_id
       call_recording_ids
       callback_requested
       contact
       csat_score
+      custom_data
       date_connected
       date_ended
       date_first_rang
@@ -60,6 +62,19 @@ module Dialpad
         return [] if data['items'].nil?
 
         data['items'].map { |item| new(item) }
+      end
+
+      # https://developers.dialpad.com/reference/callactionshangup
+      def hangup!(id = nil)
+        validate_required_attribute(id, "ID")
+        client = Dialpad.client
+        client.put("call/#{id}/actions/hangup")
+
+        if client.response.status.in?([200, 204])
+          true
+        else
+          raise APIError, "#{client.response.status} - #{client.response.body}"
+        end
       end
     end
   end
