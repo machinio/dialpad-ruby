@@ -30,8 +30,8 @@ RSpec.describe Dialpad::Client do
         .to_return(status: 200, body: { 'id' => 1, 'name' => 'test' }.to_json, headers: { 'Content-Type' => 'application/json' })
 
       response = client.get('/test')
-      expect(response['id']).to eq(1)
-      expect(response['name']).to eq('test')
+      expect(response.body['id']).to eq(1)
+      expect(response.body['name']).to eq('test')
     end
   end
 
@@ -45,8 +45,8 @@ RSpec.describe Dialpad::Client do
         .to_return(status: 201, body: { 'id' => 1, 'name' => 'test' }.to_json, headers: { 'Content-Type' => 'application/json' })
 
       response = client.post('/test', { 'name' => 'test' })
-      expect(response['id']).to eq(1)
-      expect(response['name']).to eq('test')
+      expect(response.body['id']).to eq(1)
+      expect(response.body['name']).to eq('test')
     end
   end
 
@@ -60,8 +60,8 @@ RSpec.describe Dialpad::Client do
         .to_return(status: 200, body: { 'id' => 1, 'name' => 'updated' }.to_json, headers: { 'Content-Type' => 'application/json' })
 
       response = client.put('/test/1', { 'name' => 'updated' })
-      expect(response['id']).to eq(1)
-      expect(response['name']).to eq('updated')
+      expect(response.body['id']).to eq(1)
+      expect(response.body['name']).to eq('updated')
     end
   end
 
@@ -72,7 +72,7 @@ RSpec.describe Dialpad::Client do
         .to_return(status: 204, body: '')
 
       response = client.delete('/test/1')
-      expect(response).to eq('')
+      expect(response.body).to eq('')
     end
   end
 

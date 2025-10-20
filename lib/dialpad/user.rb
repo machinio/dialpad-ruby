@@ -38,42 +38,42 @@ module Dialpad
 
       # https://developers.dialpad.com/reference/userslist
       def list(params = {})
-        data = Dialpad.client.get('users', params)
-        return [] if data['items'].nil?
+        response = Dialpad.client.get('users', params)
+        return [] if response.body['items'].nil?
 
-        data['items'].map { |item| new(item) }
+        response.body['items'].map { |item| new(item) }
       end
 
       # https://developers.dialpad.com/reference/usersget
       def retrieve(id = nil)
         validate_required_attribute(id, "ID")
 
-        data = Dialpad.client.get("users/#{id}")
-        new(data)
+        response = Dialpad.client.get("users/#{id}")
+        new(response.body)
       end
 
       # https://developers.dialpad.com/reference/userscreate
       def create(attributes = {})
         validate_required_attributes(attributes, %i(email office_id))
 
-        data = Dialpad.client.post('users', attributes)
-        new(data)
+        response = Dialpad.client.post('users', attributes)
+        new(response.body)
       end
 
       # https://developers.dialpad.com/reference/usersupdate
       def update(id = nil, attributes = {})
         validate_required_attribute(id, "ID")
 
-        data = Dialpad.client.patch("users/#{id}", attributes)
-        new(data)
+        response = Dialpad.client.patch("users/#{id}", attributes)
+        new(response.body)
       end
 
       # https://developers.dialpad.com/reference/usersdelete
       def destroy(id = nil)
         validate_required_attribute(id, "ID")
 
-        data = Dialpad.client.delete("users/#{id}")
-        new(data)
+        response = Dialpad.client.delete("users/#{id}")
+        new(response.body)
       end
     end
   end

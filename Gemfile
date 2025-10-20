@@ -3,5 +3,6 @@ gemspec
 
 group :development, :test do
   gem 'rspec'
+  gem 'rubocop'
   gem 'webmock'
 end

@@ -11,13 +11,13 @@ module Dialpad
       include Validations
 
       def create(attributes = {})
-        data = Dialpad.client.post('websockets', attributes)
-        new(data)
+        response = Dialpad.client.post('websockets', attributes)
+        new(response.body)
       end
 
       def destroy(id)
-        data = Dialpad.client.delete("websockets/#{id}")
-        new(data)
+        response = Dialpad.client.delete("websockets/#{id}")
+        new(response.body)
       end
     end
   end

@@ -18,40 +18,40 @@ module Dialpad
         def retrieve(id = nil)
           validate_required_attribute(id, "ID")
 
-          data = Dialpad.client.get("subscriptions/contact/#{id}")
-          new(data)
+          response = Dialpad.client.get("subscriptions/contact/#{id}")
+          new(response.body)
         end
 
         # https://developers.dialpad.com/reference/webhook_contact_event_subscriptionlist
         def list(params = {})
-          data = Dialpad.client.get('subscriptions/contact', params)
-          return [] if data['items'].nil?
+          response = Dialpad.client.get('subscriptions/contact', params)
+          return [] if response.body['items'].nil?
 
-          data['items'].map { |item| new(item) }
+          response.body['items'].map { |item| new(item) }
         end
 
         # https://developers.dialpad.com/reference/webhook_contact_event_subscriptioncreate
         def create(attributes = {})
           validate_required_attributes(attributes, [:webhook_id])
 
-          data = Dialpad.client.post('subscriptions/contact', attributes)
-          new(data)
+          response = Dialpad.client.post('subscriptions/contact', attributes)
+          new(response.body)
         end
 
         # https://developers.dialpad.com/reference/webhook_contact_event_subscriptionupdate
         def update(id = nil, attributes = {})
           validate_required_attribute(id, "ID")
 
-          data = Dialpad.client.patch("subscriptions/contact/#{id}", attributes)
-          new(data)
+          response = Dialpad.client.patch("subscriptions/contact/#{id}", attributes)
+          new(response.body)
         end
 
         # https://developers.dialpad.com/reference/webhook_contact_event_subscriptiondelete
         def destroy(id = nil)
           validate_required_attribute(id, "ID")
 
-          data = Dialpad.client.delete("subscriptions/contact/#{id}")
-          new(data)
+          response = Dialpad.client.delete("subscriptions/contact/#{id}")
+          new(response.body)
         end
       end
     end

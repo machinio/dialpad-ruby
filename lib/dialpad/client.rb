@@ -10,7 +10,6 @@ module Dialpad
 
       @base_url = base_url
       @token = token
-      @response = nil
     end
 
     def connection
@@ -26,7 +25,7 @@ module Dialpad
     end
 
     def get(path, params = {})
-      @response = connection.get(path, params)
+      response = connection.get(path, params)
       handle_response(response)
     end
 
@@ -36,17 +35,17 @@ module Dialpad
     end
 
     def put(path, body = {})
-      @response = connection.put(path, body)
+      response = connection.put(path, body)
       handle_response(response)
     end
 
     def patch(path, body = {})
-      @response = connection.patch(path, body)
+      response = connection.patch(path, body)
       handle_response(response)
     end
 
     def delete(path)
-      @response = connection.delete(path)
+      response = connection.delete(path)
       handle_response(response)
     end
 
@@ -55,7 +54,7 @@ module Dialpad
     def handle_response(response)
       case response.status
       when 200..299
-        response.body
+        response
       else
         body = response.body.is_a?(Hash) ? response.body.dig('error', 'message') : response.body
         raise APIError, "#{response.status} - #{body}"

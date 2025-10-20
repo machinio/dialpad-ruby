@@ -28,38 +28,38 @@ module Dialpad
         def retrieve(id = nil)
           validate_required_attribute(id, "ID")
 
-          data = Dialpad.client.get("subscriptions/call/#{id}")
-          new(data)
+          response = Dialpad.client.get("subscriptions/call/#{id}")
+          new(response.body)
         end
 
         # https://developers.dialpad.com/reference/webhook_call_event_subscriptionlist
         def list(params = {})
-          data = Dialpad.client.get('subscriptions/call', params)
-          return [] if data['items'].nil?
+          response = Dialpad.client.get('subscriptions/call', params)
+          return [] if response.body['items'].nil?
 
-          data['items'].map { |item| new(item) }
+          response.body['items'].map { |item| new(item) }
         end
 
         # https://developers.dialpad.com/reference/webhook_call_event_subscriptioncreate
         def create(attributes = {})
           validate_required_attributes(attributes, [:webhook_id])
 
-          data = Dialpad.client.post('subscriptions/call', attributes)
-          new(data)
+          response = Dialpad.client.post('subscriptions/call', attributes)
+          new(response.body)
         end
 
         # https://developers.dialpad.com/reference/webhook_call_event_subscriptionupdate
         def update(id = nil, attributes = {})
-          data = Dialpad.client.patch("subscriptions/call/#{id}", attributes)
-          new(data)
+          response = Dialpad.client.patch("subscriptions/call/#{id}", attributes)
+          new(response.body)
         end
 
         # https://developers.dialpad.com/reference/webhook_call_event_subscriptiondelete
         def destroy(id = nil)
           validate_required_attribute(id, "ID")
 
-          data = Dialpad.client.delete("subscriptions/call/#{id}")
-          new(data)
+          response = Dialpad.client.delete("subscriptions/call/#{id}")
+          new(response.body)
         end
       end
     end

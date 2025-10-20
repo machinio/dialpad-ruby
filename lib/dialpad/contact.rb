@@ -31,48 +31,48 @@ module Dialpad
       def retrieve(id = nil)
         validate_required_attribute(id, "ID")
 
-        data = Dialpad.client.get("contacts/#{id}")
-        new(data)
+        response = Dialpad.client.get("contacts/#{id}")
+        new(response.body)
       end
 
       # https://developers.dialpad.com/reference/contactslist
       def list(params = {})
-        data = Dialpad.client.get('contacts', params)
-        return [] if data['items'].nil?
+        response = Dialpad.client.get('contacts', params)
+        return [] if response.body['items'].nil?
 
-        data['items'].map { |item| new(item) }
+        response.body['items'].map { |item| new(item) }
       end
 
       # https://developers.dialpad.com/reference/contactscreate
       def create(attributes = {})
         validate_required_attributes(attributes, %i(first_name last_name))
 
-        data = Dialpad.client.post('contacts', attributes)
-        new(data)
+        response = Dialpad.client.post('contacts', attributes)
+        new(response.body)
       end
 
       # https://developers.dialpad.com/reference/contactscreate_with_uid
       def create_or_update(attributes = {})
         validate_required_attributes(attributes, %i(first_name last_name uid))
 
-        data = Dialpad.client.put('contacts', attributes)
-        new(data)
+        response = Dialpad.client.put('contacts', attributes)
+        new(response.body)
       end
 
       # https://developers.dialpad.com/reference/contactsupdate
       def update(id = nil, attributes = {})
         validate_required_attribute(id, "ID")
 
-        data = Dialpad.client.patch("contacts/#{id}", attributes)
-        new(data)
+        response = Dialpad.client.patch("contacts/#{id}", attributes)
+        new(response.body)
       end
 
       # https://developers.dialpad.com/reference/contactsdelete
       def destroy(id = nil)
         validate_required_attribute(id, "ID")
 
-        data = Dialpad.client.delete("contacts/#{id}")
-        new(data)
+        response = Dialpad.client.delete("contacts/#{id}")
+        new(response.body)
       end
     end
   end
