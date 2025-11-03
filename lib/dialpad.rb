@@ -10,11 +10,13 @@ require 'dialpad/client'
 require 'dialpad/validations'
 require 'dialpad/dialpad_object'
 require 'dialpad/webhook'
+
+require 'dialpad/call'
+require 'dialpad/contact'
+require 'dialpad/department'
 require 'dialpad/subscriptions/call_event'
 require 'dialpad/subscriptions/contact_event'
-require 'dialpad/contact'
 require 'dialpad/user'
-require 'dialpad/call'
 require 'dialpad/websocket'
 
 module Dialpad
