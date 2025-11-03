@@ -22,5 +22,13 @@ module Dialpad
     def respond_to_missing?(method, include_private = false)
       self.class::ATTRIBUTES.include?(method) || super
     end
+
+    def update(attributes)
+      self.class.update(id, attributes)
+    end
+
+    def destroy
+      self.class.destroy(id)
+    end
   end
 end
