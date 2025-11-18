@@ -114,7 +114,7 @@ RSpec.describe Dialpad::User do
             .with(headers: { 'Authorization' => "Bearer #{token}" })
             .to_return(status: 200, body: users_data.to_json, headers: { 'Content-Type' => 'application/json' })
 
-          users = described_class.list
+          users = described_class.list[:items]
 
           expect(users).to be_an(Array)
           expect(users.length).to eq(2)

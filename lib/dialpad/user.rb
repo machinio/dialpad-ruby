@@ -41,7 +41,10 @@ module Dialpad
         response = Dialpad.client.get('users', params)
         return [] if response.body['items'].nil?
 
-        response.body['items'].map { |item| new(item) }
+        structure = {}
+        structure[:cursor] = response.body['cursor'] unless response.body['cursor'].nil?
+        structure[:items] = response.body['items'].map { |item| new(item) }
+        structure
       end
 
       # https://developers.dialpad.com/reference/usersget
