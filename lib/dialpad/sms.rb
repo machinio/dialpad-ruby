@@ -31,6 +31,10 @@ module Dialpad
       attributes[:contact_id] || contact && contact[:id]
     end
 
+    def contact_type
+      attributes[:contact_type] || contact && contact[:type]
+    end
+
     def target_id
       attributes[:target_id] || target && target[:id]
     end
