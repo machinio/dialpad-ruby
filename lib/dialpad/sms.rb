@@ -23,12 +23,20 @@ module Dialpad
       to_number
     ).freeze
 
+    def to_numbers
+      attributes[:to_numbers] || attributes[:to_number] || []
+    end
+
     def contact_id
       attributes[:contact_id] || contact && contact[:id]
     end
 
-    def contact
-      attributes[:contact]
+    def target_id
+      attributes[:target_id] || target && target[:id]
+    end
+
+    def target_type
+      attributes[:target_type] || target && target[:type]
     end
 
     class << self
