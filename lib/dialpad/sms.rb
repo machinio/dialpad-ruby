@@ -28,19 +28,19 @@ module Dialpad
     end
 
     def contact_id
-      attributes[:contact_id] || contact && contact[:id]
+      attributes[:contact_id] || contact && contact['id']
     end
 
     def contact_type
-      attributes[:contact_type] || contact && contact[:type]
+      attributes[:contact_type] || contact && contact['type']
     end
 
     def target_id
-      attributes[:target_id] || target && target[:id]
+      attributes[:target_id] || target && target['id']
     end
 
     def target_type
-      attributes[:target_type] || target && target[:type]
+      attributes[:target_type] || target && target['type']
     end
 
     class << self
